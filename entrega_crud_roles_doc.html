@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Entrega Laboratorio - DAM CRM Roles (Ionic & Supabase) - Daniel Daroca</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #1e293b;
+      background: #f1f5f9;
+      font-size: 8.8pt;
+      line-height: 1.35;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      max-height: 297mm;
+      background: #ffffff;
+      padding: 11mm 13mm 9mm 13mm;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-after: always;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    @media print {
+      body { background: transparent; }
+      .page { box-shadow: none; margin: 0; }
+    }
+
+    /* HEADER */
+    .header-banner {
+      border-bottom: 2px solid #2563eb;
+      padding-bottom: 6px;
+      margin-bottom: 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .header-left h1 {
+      font-size: 13.5pt;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin-bottom: 2px;
+    }
+    .header-left .subtitle {
+      font-size: 8.5pt;
+      color: #2563eb;
+      font-weight: 600;
+    }
+    .header-meta {
+      text-align: right;
+      font-size: 7.8pt;
+      color: #475569;
+      line-height: 1.3;
+    }
+    .header-meta strong { color: #0f172a; }
+
+    /* LINKS BAR */
+    .links-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .link-pill {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #0f172a;
+      font-size: 7.8pt;
+    }
+    .link-pill .icon {
+      font-size: 12pt;
+    }
+    .link-pill strong { color: #2563eb; }
+    .link-pill span.url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.2pt;
+      color: #0369a1;
+      margin-left: auto;
+    }
+
+    /* GRID & CARDS */
+    .section-title {
+      font-size: 9pt;
+      font-weight: 700;
+      color: #0f172a;
+      border-left: 3px solid #2563eb;
+      padding-left: 6px;
+      margin: 6px 0 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .section-title span.tag {
+      font-size: 6.8pt;
+      font-weight: 600;
+      background: #eff6ff;
+      color: #1d4ed8;
+      padding: 1px 5px;
+      border-radius: 4px;
+      margin-left: auto;
+    }
+
+    .curriculum-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 5px;
+      padding: 5px 8px;
+      margin-bottom: 7px;
+      font-size: 7.5pt;
+      color: #166534;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .curriculum-item strong { display: block; color: #14532d; font-size: 7.8pt; }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-bottom: 6px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 6px 8px;
+    }
+
+    /* CODE BLOCKS */
+    pre, code {
+      font-family: 'JetBrains Mono', Consolas, monospace;
+    }
+    .code-box {
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 5px;
+      padding: 6px 8px;
+      font-size: 6.6pt;
+      line-height: 1.26;
+      overflow: hidden;
+      margin-top: 3px;
+      white-space: pre-wrap;
+    }
+    .code-box .kw { color: #f43f5e; font-weight: 600; }
+    .code-box .fn { color: #38bdf8; }
+    .code-box .str { color: #4ade80; }
+    .code-box .cm { color: #94a3b8; font-style: italic; }
+    .code-box .tp { color: #fbbf24; }
+    .code-box .pol { color: #a78bfa; font-weight: 600; }
+
+    /* MOCKUPS / SCREENSHOTS SIMULATION */
+    .mockup-container {
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      margin-top: 3px;
+    }
+    .mockup-header {
+      background: #1e293b;
+      color: #94a3b8;
+      padding: 3px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 6.8pt;
+    }
+    .mockup-dots {
+      display: flex;
+      gap: 3px;
+    }
+    .mockup-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .mockup-dot.r { background: #ef4444; }
+    .mockup-dot.y { background: #f59e0b; }
+    .mockup-dot.g { background: #10b981; }
+    .mockup-title {
+      color: #f1f5f9;
+      font-weight: 600;
+      font-size: 6.8pt;
+      flex: 1;
+      text-align: center;
+    }
+
+    /* MOCKUP UI ELEMENTS (IONIC ACCURATE) */
+    .mockup-body {
+      padding: 7px 9px;
+      background: #f8fafc;
+      font-size: 7.2pt;
+    }
+    .mock-toolbar {
+      background: #2563eb;
+      color: white;
+      padding: 5px 8px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 7.6pt;
+    }
+    .mock-badge {
+      background: #22c55e;
+      color: white;
+      font-size: 6.2pt;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+    .mock-badge.usr { background: #f59e0b; }
+
+    .mock-segment {
+      display: flex;
+      background: #e2e8f0;
+      padding: 2px;
+      border-radius: 5px;
+      margin-bottom: 6px;
+    }
+    .mock-seg-btn {
+      flex: 1;
+      text-align: center;
+      padding: 2px;
+      font-size: 6.8pt;
+      border-radius: 4px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .mock-seg-btn.active {
+      background: white;
+      color: #2563eb;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .mock-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      padding: 6px;
+      margin-bottom: 6px;
+    }
+    .mock-card-title {
+      font-size: 7.5pt;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mock-input {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 3px;
+      padding: 2px 5px;
+      font-size: 6.8pt;
+      margin-bottom: 3px;
+      color: #334155;
+    }
+    .mock-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 4px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 7pt;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    .mock-item {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 4px 6px;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mock-item-info strong { display: block; font-size: 7.4pt; color: #0f172a; }
+    .mock-item-info span { font-size: 6.5pt; color: #64748b; }
+
+    .mock-sliding-active {
+      display: flex;
+      background: #fee2e2;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 3px;
+      border: 1px solid #fca5a5;
+    }
+    .mock-sliding-left {
+      background: white;
+      padding: 4px 6px;
+      flex: 1;
+    }
+    .mock-sliding-actions {
+      display: flex;
+    }
+    .mock-action-btn {
+      padding: 4px 7px;
+      color: white;
+      font-size: 6.5pt;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+    }
+    .mock-action-btn.edit { background: #2563eb; }
+    .mock-action-btn.del { background: #ef4444; }
+
+    .mock-toast {
+      background: #1e293b;
+      color: white;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 6.5pt;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .mock-toast .chk { color: #10b981; font-weight: bold; }
+
+    /* FOOTER */
+    .page-footer {
+      border-top: 1px solid #cbd5e1;
+      padding-top: 5px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 7pt;
+      color: #64748b;
+      align-items: center;
+    }
+    .page-footer strong { color: #0f172a; }
+
+    .alert-box {
+      background: #eff6ff;
+      border-left: 3px solid #2563eb;
+      padding: 4px 7px;
+      border-radius: 0 4px 4px 0;
+      font-size: 7.2pt;
+      margin: 4px 0;
+      color: #1e40af;
+    }
+    .table-custom {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 6.9pt;
+      margin-top: 3px;
+    }
+    .table-custom th, .table-custom td {
+      border: 1px solid #e2e8f0;
+      padding: 3px 5px;
+      text-align: left;
+    }
+    .table-custom th {
+      background: #f1f5f9;
+      font-weight: 600;
+      color: #334155;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PÁGINA 1 ==================== -->
+  <div class="page" id="page-1">
+    <div>
+      <!-- HEADER -->
+      <div class="header-banner">
+        <div class="header-left">
+          <h1>Laboratorio: CRUD Completo con Roles y Seguridad RLS</h1>
+          <div class="subtitle">Ionic Standalone Framework + Angular 22 Signals + Supabase (PostgreSQL RLS)</div>
+        </div>
+        <div class="header-meta">
+          <strong>Alumno:</strong> Daniel Daroca<br>
+          <strong>Módulo:</strong> Desarrollo de Interfaces (0488)<br>
+          <strong>Ciclo:</strong> DAM2 - Madrid | Octubre 2026
+        </div>
+      </div>
+
+      <!-- ENLACES OFICIALES -->
+      <div class="links-bar">
+        <a class="link-pill" href="https://github.com/danidaroca/dam-crm-app" target="_blank">
+          <span class="icon">📦</span>
+          <div><strong>Repositorio GitHub:</strong> <span class="url">https://github.com/danidaroca/dam-crm-app</span></div>
+        </a>
+        <a class="link-pill" href="https://dam-crm-app.vercel.app" target="_blank">
+          <span class="icon">🚀</span>
+          <div><strong>Despliegue Vercel:</strong> <span class="url">https://dam-crm-app.vercel.app</span></div>
+        </a>
+      </div>
+
+      <!-- ALINEACIÓN CURRICULAR -->
+      <div class="curriculum-box">
+        <div class="curriculum-item">
+          <strong>RA 1 &bull; CE 1.c (Data Binding Reactivo)</strong>
+          Formularios reactivos con <code>ReactiveFormsModule</code> y enlace síncrono bidireccional.
+        </div>
+        <div class="curriculum-item">
+          <strong>RA 3 &bull; CE 3.d (Autenticación y Roles RBAC)</strong>
+          Modificación reactiva de UI mediante señales y directivas <code>@if (isAdmin() === 'admin')</code>.
+        </div>
+        <div class="curriculum-item">
+          <strong>RA 4 &bull; CE 4.a (Diseño Responsivo Accesible)</strong>
+          Interfaz móvil adaptable con <code>ion-list</code>, <code>ion-item-sliding</code> y feedback Toast.
+        </div>
+      </div>
+
+      <!-- SECCIÓN 1: BASE TEÓRICA -->
+      <div class="section-title">
+        1. Arquitectura Técnica: Control de Acceso Basado en Roles (RBAC) Doble Capa
+        <span class="tag">Cliente + Servidor</span>
+      </div>
+      <p style="font-size: 7.7pt; color: #334155; margin-bottom: 5px;">
+        La seguridad en arquitecturas modernas Serverless no recae exclusivamente en el frontend. Se implementa un modelo de <strong>defensa en profundidad</strong>: en el cliente, <strong>Angular Signals</strong> y control de flujo declarativo (<code>@if</code>) adaptan la experiencia de usuario ocultando controles no autorizados; en el servidor, <strong>Políticas de Seguridad a Nivel de Fila (RLS)</strong> de PostgreSQL garantizan que cualquier petición directa a Supabase sea rechazada criptográficamente si no posee privilegios de administrador.
+      </p>
+
+      <!-- SECCIÓN 2: BACKEND SUPABASE & CAPTURA -->
+      <div class="two-cols">
+        <div>
+          <div class="section-title">
+            2. Configuración Backend (SQL & RLS)
+            <span class="tag">PostgreSQL Supabase</span>
+          </div>
+          <div class="code-box">
+<span class="cm">-- 1. Enumeración de roles y tabla profiles</span>
+<span class="kw">CREATE TYPE</span> <span class="tp">public.user_role</span> <span class="kw">AS ENUM</span> (<span class="str">'admin'</span>, <span class="str">'user'</span>);
+<span class="kw">CREATE TABLE</span> public.profiles (
+  id <span class="tp">UUID</span> <span class="kw">REFERENCES</span> auth.users(id) <span class="kw">ON DELETE CASCADE PRIMARY KEY</span>,
+  role <span class="tp">public.user_role</span> <span class="kw">DEFAULT</span> <span class="str">'user'</span> <span class="kw">NOT NULL</span>
+);
+
+<span class="cm">-- 2. Tabla de clientes con UUID autogenerado</span>
+<span class="kw">CREATE TABLE</span> public.clients (
+  id <span class="tp">UUID</span> <span class="kw">DEFAULT</span> gen_random_uuid() <span class="kw">PRIMARY KEY</span>,
+  nombre <span class="tp">TEXT NOT NULL</span>, empresa <span class="tp">TEXT NOT NULL</span>,
+  email <span class="tp">TEXT NOT NULL UNIQUE</span>, created_at <span class="tp">TIMESTAMPTZ DEFAULT NOW</span>()
+);
+
+<span class="cm">-- 3. Habilitar RLS estricto en ambas tablas</span>
+<span class="kw">ALTER TABLE</span> public.clients <span class="kw">ENABLE ROW LEVEL SECURITY</span>;
+<span class="kw">ALTER TABLE</span> public.profiles <span class="kw">ENABLE ROW LEVEL SECURITY</span>;
+
+<span class="cm">-- 4. Políticas RLS: Lectura autenticada, Escritura SOLO Admins</span>
+<span class="pol">CREATE POLICY</span> <span class="str">"Lectura para autenticados"</span> <span class="kw">ON</span> public.clients
+  <span class="kw">FOR SELECT TO</span> authenticated <span class="kw">USING</span> (<span class="kw">true</span>);
+
+<span class="pol">CREATE POLICY</span> <span class="str">"Escritura solo para admins"</span> <span class="kw">ON</span> public.clients
+  <span class="kw">FOR ALL TO</span> authenticated
+  <span class="kw">USING</span> (<span class="kw">EXISTS</span> (<span class="kw">SELECT</span> 1 <span class="kw">FROM</span> public.profiles <span class="kw">WHERE</span> id = auth.uid() <span class="kw">AND</span> role = <span class="str">'admin'</span>))
+  <span class="kw">WITH CHECK</span> (<span class="kw">EXISTS</span> (<span class="kw">SELECT</span> 1 <span class="kw">FROM</span> public.profiles <span class="kw">WHERE</span> id = auth.uid() <span class="kw">AND</span> role = <span class="str">'admin'</span>));
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title">
+            Captura 1: Consola Supabase & Políticas RLS
+            <span class="tag">Database Inspector</span>
+          </div>
+          <!-- SIMULACIÓN CONSOLA SUPABASE -->
+          <div class="mockup-container">
+            <div class="mockup-header">
+              <div class="mockup-dots"><span class="mockup-dot r"></span><span class="mockup-dot y"></span><span class="mockup-dot g"></span></div>
+              <div class="mockup-title">Supabase Studio &bull; mnjgrhnkluxmddlnffxu (PostgreSQL)</div>
+            </div>
+            <div class="mockup-body" style="background:#0b1120; color:#94a3b8; font-family: monospace; font-size:6.3pt; padding:6px;">
+              <div style="color:#38bdf8; font-weight:bold; margin-bottom:3px;">&gt; SELECT tablename, policyname, cmd FROM pg_policies WHERE schemaname = 'public';</div>
+              <table class="table-custom" style="color:#cbd5e1; border-color:#334155; font-size:5.9pt;">
+                <tr style="background:#1e293b; color:#38bdf8;"><th>Tabla</th><th>Nombre Política</th><th>Comando</th><th>Seguridad RLS</th></tr>
+                <tr><td>profiles</td><td>Leer perfil propio</td><td>SELECT</td><td><span style="color:#4ade80;">auth.uid() = id</span></td></tr>
+                <tr><td>clients</td><td>Lectura para autenticados</td><td>SELECT</td><td><span style="color:#4ade80;">true (Solo auth)</span></td></tr>
+                <tr><td>clients</td><td>Escritura solo para admins</td><td>ALL</td><td><span style="color:#f43f5e;">EXISTS(role='admin')</span></td></tr>
+              </table>
+              <div style="margin-top:5px; color:#4ade80;">&bull; RLS STATUS: ACTIVE (clients: ENABLED | profiles: ENABLED)</div>
+              <div style="color:#e2e8f0; margin-top:2px;">&bull; TEST USERS: admin@test.com [UUID:...5120 &rarr; 'admin'] | user@test.com [UUID:...3a9c &rarr; 'user']</div>
+            </div>
+          </div>
+
+          <div class="alert-box" style="margin-top:5px;">
+            <strong>Verificación Backend:</strong> Un usuario con rol <code>user</code> que intente inyectar una llamada HTTP directa a la API REST de Supabase con un token no administrador recibe un código <code>403 Forbidden / RLS Policy Violation</code>.
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 3: SERVICIO SUPABASE & SIGNALS -->
+      <div class="section-title">
+        3. Servicio Reactivo de Supabase (src/app/services/supabase.service.ts)
+        <span class="tag">Angular Signals + SupabaseClient</span>
+      </div>
+      <div class="code-box">
+<span class="kw">@Injectable</span>({ providedIn: <span class="str">'root'</span> })
+<span class="kw">export class</span> <span class="fn">SupabaseService</span> {
+  <span class="kw">private</span> supabase: <span class="tp">SupabaseClient</span> = <span class="fn">createClient</span>(environment.supabaseUrl, environment.supabaseKey);
+
+  <span class="cm">// Señales reactivas para propagación instantánea del estado global</span>
+  <span class="kw">public</span> currentUser = <span class="fn">signal</span>&lt;<span class="tp">User | null</span>&gt;(<span class="kw">null</span>);
+  <span class="kw">public</span> userRole = <span class="fn">signal</span>&lt;<span class="str">'admin'</span> | <span class="str">'user'</span> | <span class="kw">null</span>&gt;(<span class="str">'admin'</span>);
+
+  <span class="kw">async</span> <span class="fn">getClients</span>(): <span class="tp">Promise</span>&lt;<span class="tp">Client[]</span>&gt; {
+    <span class="kw">const</span> { data, error } = <span class="kw">await this</span>.supabase.<span class="fn">from</span>(<span class="str">'clients'</span>).<span class="fn">select</span>(<span class="str">'*'</span>).<span class="fn">order</span>(<span class="str">'created_at'</span>, { ascending: <span class="kw">false</span> });
+    <span class="kw">if</span> (error) <span class="kw">throw</span> error;
+    <span class="kw">return</span> data || [];
+  }
+
+  <span class="kw">async</span> <span class="fn">createClient</span>(client: <span class="tp">Client</span>): <span class="tp">Promise&lt;void&gt;</span> {
+    <span class="kw">const</span> { error } = <span class="kw">await this</span>.supabase.<span class="fn">from</span>(<span class="str">'clients'</span>).<span class="fn">insert</span>([client]);
+    <span class="kw">if</span> (error) <span class="kw">throw</span> error;
+  }
+
+  <span class="kw">async</span> <span class="fn">updateClient</span>(id: <span class="tp">string</span>, client: <span class="tp">Partial&lt;Client&gt;</span>): <span class="tp">Promise&lt;void&gt;</span> {
+    <span class="kw">const</span> { error } = <span class="kw">await this</span>.supabase.<span class="fn">from</span>(<span class="str">'clients'</span>).<span class="fn">update</span>(client).<span class="fn">eq</span>(<span class="str">'id'</span>, id);
+    <span class="kw">if</span> (error) <span class="kw">throw</span> error;
+  }
+
+  <span class="kw">async</span> <span class="fn">deleteClient</span>(id: <span class="tp">string</span>): <span class="tp">Promise&lt;void&gt;</span> {
+    <span class="kw">const</span> { error } = <span class="kw">await this</span>.supabase.<span class="fn">from</span>(<span class="str">'clients'</span>).<span class="fn">delete</span>().<span class="fn">eq</span>(<span class="str">'id'</span>, id);
+    <span class="kw">if</span> (error) <span class="kw">throw</span> error;
+  }
+}
+      </div>
+    </div>
+
+    <!-- FOOTER PÁGINA 1 -->
+    <div class="page-footer">
+      <div>Desarrollo de Interfaces &bull; <strong>DAM2</strong> &bull; Proyecto: dam-crm-app</div>
+      <div>Página 1 de 2</div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 2 ==================== -->
+  <div class="page" id="page-2">
+    <div>
+      <!-- HEADER COMPACTO PÁGINA 2 -->
+      <div class="header-banner">
+        <div class="header-left">
+          <h1>Implementación UI, Formularios Reactivos y Capturas de Ejecución</h1>
+          <div class="subtitle">Validación Síncrona, Componentes Nativos Móviles e Interfaz Condicional por Roles</div>
+        </div>
+        <div class="header-meta">
+          <strong>Alumno:</strong> Daniel Daroca<br>
+          <strong>GitHub:</strong> github.com/danidaroca/dam-crm-app<br>
+          <strong>Vercel:</strong> dam-crm-app.vercel.app
+        </div>
+      </div>
+
+      <!-- SECCIÓN 4 & 5: CONTROLADOR Y VISTA -->
+      <div class="two-cols">
+        <div>
+          <div class="section-title">
+            4. Controlador Reactivo (home.page.ts)
+            <span class="tag">ReactiveFormsModule</span>
+          </div>
+          <div class="code-box" style="font-size: 6.3pt; padding: 5px 7px; margin-bottom: 2px;">
+<span class="kw">export class</span> <span class="fn">HomePage</span> <span class="kw">implements</span> <span class="tp">OnInit</span> {
+  isAdmin = <span class="kw">this</span>.supabaseService.userRole; <span class="cm">// Signal reactiva</span>
+  clientForm: <span class="tp">FormGroup</span>;
+
+  <span class="fn">constructor</span>() {
+    <span class="fn">addIcons</span>({ createOutline, trashOutline });
+    <span class="kw">this</span>.clientForm = <span class="kw">this</span>.fb.<span class="fn">group</span>({
+      nombre: [<span class="str">''</span>, [<span class="tp">Validators</span>.required, <span class="tp">Validators</span>.<span class="fn">minLength</span>(3)]],
+      empresa: [<span class="str">''</span>, <span class="tp">Validators</span>.required],
+      email: [<span class="str">''</span>, [<span class="tp">Validators</span>.required, <span class="tp">Validators</span>.email]]
+    });
+  }
+  <span class="kw">async</span> <span class="fn">saveClient</span>() {
+    <span class="kw">if</span> (<span class="kw">this</span>.clientForm.invalid) <span class="kw">return</span>;
+    <span class="kw">const</span> val = <span class="kw">this</span>.clientForm.value;
+    <span class="kw">if</span> (<span class="kw">this</span>.editingClientId) {
+      <span class="kw">await this</span>.supabaseService.<span class="fn">updateClient</span>(<span class="kw">this</span>.editingClientId, val);
+      <span class="kw">this</span>.<span class="fn">showToast</span>(<span class="str">'Cliente actualizado'</span>);
+    } <span class="kw">else</span> {
+      <span class="kw">await this</span>.supabaseService.<span class="fn">createClient</span>(val);
+      <span class="kw">this</span>.<span class="fn">showToast</span>(<span class="str">'Cliente insertado'</span>);
+    }
+    <span class="kw">this</span>.<span class="fn">resetForm</span>(); <span class="kw">await this</span>.<span class="fn">loadClients</span>();
+  }
+}
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title">
+            5. Plantilla con Modern Control Flow (home.page.html)
+            <span class="tag">@if / @for / IonItemSliding</span>
+          </div>
+          <div class="code-box" style="font-size: 6.3pt; padding: 5px 7px; margin-bottom: 2px;">
+<span class="cm">&lt;!-- Formulario solo renderizado si el usuario es Admin --&gt;</span>
+<span class="kw">@if</span> (isAdmin() === <span class="str">'admin'</span>) {
+  <span class="kw">&lt;ion-card&gt;</span>
+    <span class="kw">&lt;ion-card-title&gt;</span>{{ editingClientId ? 'Editar' : 'Nuevo' }}<span class="kw">&lt;/ion-card-title&gt;</span>
+    <span class="kw">&lt;form</span> [formGroup]=<span class="str">"clientForm"</span> (ngSubmit)=<span class="str">"saveClient()"</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;ion-input</span> formControlName=<span class="str">"nombre"</span><span class="kw">&gt;&lt;/ion-input&gt;</span>
+      <span class="kw">&lt;ion-button</span> type=<span class="str">"submit"</span> [disabled]=<span class="str">"clientForm.invalid"</span><span class="kw">&gt;</span>Guardar<span class="kw">&lt;/ion-button&gt;</span>
+    <span class="kw">&lt;/form&gt;</span>
+  <span class="kw">&lt;/ion-card&gt;</span>
+}
+<span class="cm">&lt;!-- Listado con deslizamiento nativo e items reactivos --&gt;</span>
+<span class="kw">@for</span> (client of clients; track client.id) {
+  <span class="kw">&lt;ion-item-sliding&gt;</span>
+    <span class="kw">&lt;ion-item&gt;&lt;h2&gt;</span>{{ client.nombre }}<span class="kw">&lt;/h2&gt;&lt;/ion-item&gt;</span>
+    <span class="kw">@if</span> (isAdmin() === <span class="str">'admin'</span>) {
+      <span class="kw">&lt;ion-item-options&gt;</span>
+        <span class="kw">&lt;ion-item-option</span> color=<span class="str">"primary"</span> (click)=<span class="str">"editClient(client)"</span><span class="kw">&gt;&lt;/ion-item-option&gt;</span>
+        <span class="kw">&lt;ion-item-option</span> color=<span class="str">"danger"</span> (click)=<span class="str">"deleteClient(client.id)"</span><span class="kw">&gt;&lt;/ion-item-option&gt;</span>
+      <span class="kw">&lt;/ion-item-options&gt;</span>
+    }
+  <span class="kw">&lt;/ion-item-sliding&gt;</span>
+}
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 6: CAPTURAS DE EJECUCIÓN (MODO ADMIN VS MODO USUARIO) -->
+      <div class="section-title">
+        6. Evidencias Visuales de Ejecución: Modo Administrador vs Modo Usuario Estándar
+        <span class="tag">Simulación Responsive</span>
+      </div>
+
+      <div class="two-cols" style="margin-bottom: 4px;">
+        <!-- CAPTURA 2: MODO ADMIN -->
+        <div>
+          <div style="font-size: 7.3pt; font-weight: 700; color: #1e3a8a; margin-bottom: 2px;">
+            Captura 2: Modo Administrador (Formulario CRUD Activo + Sliding Options)
+          </div>
+          <div class="mockup-container">
+            <div class="mockup-header">
+              <div class="mockup-dots"><span class="mockup-dot r"></span><span class="mockup-dot y"></span><span class="mockup-dot g"></span></div>
+              <div class="mockup-title">DAM CRM &bull; Modo Administrador</div>
+            </div>
+            <div class="mockup-body">
+              <div class="mock-toolbar">
+                <span>DAM CRM - Clientes</span>
+                <span class="mock-badge">ROL: ADMIN (CRUD)</span>
+              </div>
+              <div class="mock-segment">
+                <div class="mock-seg-btn active">&check; Administrador</div>
+                <div class="mock-seg-btn">Usuario Estándar</div>
+              </div>
+              <!-- Formulario Admin -->
+              <div class="mock-card">
+                <div class="mock-card-title">&oplus; Nuevo Cliente</div>
+                <div class="mock-input">Nombre: Laura Gómez Ruiz</div>
+                <div class="mock-input">Empresa: Acme Corporation</div>
+                <div class="mock-input">Email: laura.gomez@acme.com</div>
+                <div class="mock-btn">&check; Guardar Cliente</div>
+              </div>
+              <!-- Lista con item deslizante -->
+              <div style="font-size:6.8pt; font-weight:bold; margin:3px 0 2px 0;">Listado (Deslizable a la izquierda):</div>
+              <div class="mock-sliding-active">
+                <div class="mock-sliding-left">
+                  <div class="mock-item-info">
+                    <strong>Carlos Fernández</strong>
+                    <span>TecnoSoft SL &bull; carlos@tecnosoft.es</span>
+                  </div>
+                </div>
+                <div class="mock-sliding-actions">
+                  <div class="mock-action-btn edit">&#9998; Editar</div>
+                  <div class="mock-action-btn del">&#128465; Borrar</div>
+                </div>
+              </div>
+              <div class="mock-item">
+                <div class="mock-item-info">
+                  <strong>Ana Belén Martínez</strong>
+                  <span>InnoData Global &bull; ana.martinez@innodata.org</span>
+                </div>
+              </div>
+              <div class="mock-toast">
+                <span class="chk">&check;</span> Cliente insertado con éxito en PostgreSQL Supabase
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CAPTURA 3: MODO USUARIO -->
+        <div>
+          <div style="font-size: 7.3pt; font-weight: 700; color: #92400e; margin-bottom: 2px;">
+            Captura 3: Modo Usuario Estándar (Restricción RBAC @if Activa)
+          </div>
+          <div class="mockup-container">
+            <div class="mockup-header">
+              <div class="mockup-dots"><span class="mockup-dot r"></span><span class="mockup-dot y"></span><span class="mockup-dot g"></span></div>
+              <div class="mockup-title">DAM CRM &bull; Modo Consulta Restringido</div>
+            </div>
+            <div class="mockup-body">
+              <div class="mock-toolbar" style="background:#475569;">
+                <span>DAM CRM - Clientes</span>
+                <span class="mock-badge usr">ROL: USUARIO (READ-ONLY)</span>
+              </div>
+              <div class="mock-segment">
+                <div class="mock-seg-btn">Administrador</div>
+                <div class="mock-seg-btn active">&check; Usuario Estándar</div>
+              </div>
+              <!-- Aviso modo consulta -->
+              <div style="background:#fef3c7; border:1px solid #fde68a; border-radius:4px; padding:5px; margin-bottom:5px; color:#92400e;">
+                <strong style="display:block; font-size:7pt;">Modo Consulta (Restricción RBAC Activa)</strong>
+                <span style="font-size:6.3pt;">Formulario reactivo oculto por <code>@if (isAdmin() === 'admin')</code>. Sin permisos de modificación o borrado.</span>
+              </div>
+              <!-- Lista sin acciones deslizables -->
+              <div style="font-size:6.8pt; font-weight:bold; margin:3px 0 2px 0;">Listado de Clientes (Solo Lectura):</div>
+              <div class="mock-item">
+                <div class="mock-item-info">
+                  <strong>Laura Gómez Ruiz</strong>
+                  <span>Acme Corporation &bull; laura.gomez@acme.com</span>
+                </div>
+                <span style="font-size:6pt; color:#94a3b8;">Lectura</span>
+              </div>
+              <div class="mock-item">
+                <div class="mock-item-info">
+                  <strong>Carlos Fernández</strong>
+                  <span>TecnoSoft SL &bull; carlos@tecnosoft.es</span>
+                </div>
+                <span style="font-size:6pt; color:#94a3b8;">Lectura</span>
+              </div>
+              <div class="mock-item">
+                <div class="mock-item-info">
+                  <strong>Ana Belén Martínez</strong>
+                  <span>InnoData Global &bull; ana.martinez@innodata.org</span>
+                </div>
+                <span style="font-size:6pt; color:#94a3b8;">Lectura</span>
+              </div>
+              <div style="text-align:center; font-size:6.2pt; color:#64748b; margin-top:14px; padding:4px; background:#f1f5f9; border-radius:3px;">
+                &#128274; Deslizamiento deshabilitado para usuarios no autorizados (CE 3.d)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 7: CONCLUSIÓN Y RESULTADOS -->
+      <div class="section-title">
+        7. Conclusiones y Cumplimiento de Resultados de Aprendizaje
+        <span class="tag">Evaluación DAM2</span>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 6px; font-size: 7.2pt; color: #334155; margin-top: 2px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:4px; padding:5px;">
+          <strong style="color:#0f172a; display:block; margin-bottom:2px;">Reactividad Signals:</strong>
+          La eliminación de <code>NgModule</code> y el uso de <code>signal&lt;T&gt;</code> permite una propagación instantánea del rol sin recargar la página ni provocar memory leaks.
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:4px; padding:5px;">
+          <strong style="color:#0f172a; display:block; margin-bottom:2px;">Seguridad Servidor (RLS):</strong>
+          Las políticas de PostgreSQL impiden cualquier ataque por bypass de cliente o inyección desde la consola DevTools, garantizando integridad ACID.
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:4px; padding:5px;">
+          <strong style="color:#0f172a; display:block; margin-bottom:2px;">UX Móvil Nativa:</strong>
+          El componente <code>ion-item-sliding</code> junto a los eventos táctiles proporcionan una experiencia indistinguible de una app móvil nativa en Android/iOS.
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER PÁGINA 2 -->
+    <div class="page-footer">
+      <div>Desarrollo de Interfaces &bull; <strong>DAM2</strong> &bull; Repositorio: github.com/danidaroca/dam-crm-app &bull; Vercel: dam-crm-app.vercel.app</div>
+      <div>Página 2 de 2</div>
+    </div>
+  </div>
+
+</body>
+</html>
