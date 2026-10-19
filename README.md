@@ -1,4 +1,4 @@
-# DAM CRM - Gestión Completa CRUD con Roles (Ionic Standalone, Supabase & Angular)
+# Supabase_Proyecto1: Gestión Completa CRUD con Roles (Ionic Standalone & Supabase RBAC)
 
 **Módulo Profesional:** Desarrollo de Interfaces (Código 0488)  
 **Ciclo Formativo:** Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM2)  
@@ -9,8 +9,8 @@
 
 ## 🌐 Enlaces del Proyecto
 
-- 🔗 **Repositorio GitHub:** [https://github.com/danidaroca/dam-crm-app](https://github.com/danidaroca/dam-crm-app)
-- 🚀 **Despliegue en Vercel:** [https://dam-crm-app.vercel.app](https://dam-crm-app.vercel.app)
+- 🔗 **Repositorio GitHub:** [https://github.com/danidaroca/Supabase_Proyecto1](https://github.com/danidaroca/Supabase_Proyecto1) *(o [https://github.com/danidaroca/dam-crm-app](https://github.com/danidaroca/dam-crm-app))*
+- 🚀 **Despliegue en Vercel:** [https://supabase-proyecto1.vercel.app](https://supabase-proyecto1.vercel.app) *(o [https://dam-crm-app.vercel.app](https://dam-crm-app.vercel.app))*
 
 ---
 

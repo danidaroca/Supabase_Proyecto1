@@ -1,7 +1,7 @@
 {
-  "name": "dam-crm-app",
+  "name": "supabase-proyecto1",
   "version": "1.0.0",
-  "description": "DAM CRM - Gestión Completa CRUD con Roles (Ionic Standalone, Angular 22, Supabase RBAC)",
+  "description": "Supabase Proyecto 1 - Gestión Completa CRUD con Roles (Ionic Standalone, Angular 22, Supabase RBAC)",
   "author": "Daniel Daroca <dani.daroca@gmail.com>",
   "scripts": {
     "ng": "ng",
