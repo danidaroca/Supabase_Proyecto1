@@ -28,6 +28,10 @@
    - Página dedicada para consultar los objetos del bucket público `imagenes` en Supabase Storage.
    - Presentación moderna en **Cards responsivas (`ion-card`)**, con visualización de la imagen, título, descripción, peso en KB, formato MIME, fecha y botones para copiar o abrir la URL pública.
 
+3. 📱 **Alcance del Despliegue (Punto 3):**
+   - **No es necesario llevarlo a Android por ahora.**
+   - El despliegue y evaluación se centran en la versión **Web SPA / PWA** en [Vercel](https://supabase-proyecto1.vercel.app) con interfaz adaptativa responsiva.
+
 ---
 
 ## 🎯 Alineación Curricular (Comunidad de Madrid)
