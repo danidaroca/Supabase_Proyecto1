@@ -1,0 +1,119 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goToCrud()" fill="clear" color="light">
+        <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+        Volver al CRUD
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Storage Bucket: {{ bucketName }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="loadImages()" fill="clear" color="light" title="Recargar bucket">
+        <ion-icon name="refresh-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding storage-content">
+  <!-- BANNER INFORMATIVO DEL BUCKET Y POLÍTICAS RLS -->
+  <div class="bucket-info-banner ion-margin-bottom">
+    <div class="bucket-title-row">
+      <div class="bucket-badge-icon">
+        <ion-icon name="images-outline"></ion-icon>
+      </div>
+      <div class="bucket-details">
+        <h2>Bucket de Almacenamiento: <code>{{ bucketName }}</code></h2>
+        <p>Configurado en Supabase Storage con acceso público y Políticas RLS de lectura y escritura.</p>
+      </div>
+      <ion-badge color="success" class="status-badge">PÚBLICO (RLS)</ion-badge>
+    </div>
+
+    <div class="bucket-meta-pills">
+      <span class="meta-pill">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        Política: <code>Lectura pública imagenes</code>
+      </span>
+      <span class="meta-pill">
+        <ion-icon name="sparkles-outline"></ion-icon>
+        Total: <strong>{{ storageItems.length }} imágenes registradas</strong>
+      </span>
+    </div>
+  </div>
+
+  <!-- SPINNER DE CARGA -->
+  @if (isLoading) {
+    <div class="loading-state ion-text-center ion-padding">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Consultando objetos del Storage Bucket en Supabase...</p>
+    </div>
+  } @else {
+    <!-- GRID RESPONSIVO DE CARDS (SE MUESTRAN COMO CARDS) -->
+    <ion-grid class="storage-grid">
+      <ion-row>
+        @for (item of storageItems; track item.name) {
+          <ion-col size="12" size-md="6" size-lg="6" size-xl="3">
+            <ion-card class="storage-card animate-card">
+              <!-- CONTENEDOR VISUAL DE LA IMAGEN -->
+              <div class="image-preview-wrapper">
+                <div class="image-overlay-badge">
+                  <ion-badge color="dark">{{ item.mimetype }}</ion-badge>
+                </div>
+                <!-- Banner decorativo SVG vectorizado para representación limpia -->
+                <div class="svg-visual-card">
+                  <div class="svg-art-circle">
+                    <ion-icon name="images-outline"></ion-icon>
+                  </div>
+                  <div class="svg-filename">{{ item.name }}</div>
+                </div>
+              </div>
+
+              <ion-card-header>
+                <div class="card-subtitle-row">
+                  <ion-card-subtitle>{{ item.bucket }} &bull; {{ item.sizeFormatted }}</ion-card-subtitle>
+                  <span class="upload-date">{{ item.created_at }}</span>
+                </div>
+                <ion-card-title>{{ item.title }}</ion-card-title>
+              </ion-card-header>
+
+              <ion-card-content>
+                <p class="image-desc">{{ item.description }}</p>
+
+                <div class="file-path-box">
+                  <span class="path-label">Ruta pública:</span>
+                  <code class="path-code">{{ item.name }}</code>
+                </div>
+
+                <div class="card-actions-row ion-margin-top">
+                  <ion-button expand="block" fill="outline" size="small" color="primary" (click)="copyUrl(item.url)">
+                    <ion-icon name="copy-outline" slot="start"></ion-icon>
+                    Copiar URL
+                  </ion-button>
+                  <ion-button expand="block" fill="solid" size="small" color="primary" (click)="openUrl(item.url)">
+                    <ion-icon name="open-outline" slot="start"></ion-icon>
+                    Ver Imagen
+                  </ion-button>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        } @empty {
+          <ion-col size="12">
+            <div class="empty-state ion-text-center ion-padding">
+              <ion-icon name="images-outline" class="empty-icon"></ion-icon>
+              <h3>No se encontraron imágenes en el bucket "{{ bucketName }}"</h3>
+              <p>Sube imágenes mediante el panel de Supabase Storage para visualizarlas como cards.</p>
+            </div>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  }
+
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="toastMessage"
+    duration="2200"
+    (didDismiss)="setToastOpen(false)">
+  </ion-toast>
+</ion-content>

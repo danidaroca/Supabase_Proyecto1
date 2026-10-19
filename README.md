@@ -14,6 +14,22 @@
 
 ---
 
+## ✨ Nuevas Funcionalidades Implementadas
+
+1. 🔐 **Solicitud Obligatoria de Login para CUD (Insertar, Actualizar o Editar):**
+   - Cuando el usuario intenta **insertar**, **editar** o **eliminar** un cliente, la aplicación verifica si existe una sesión activa en Supabase Auth.
+   - Si no hay sesión, se abre automáticamente el modal de autenticación.
+   - **Control estricto de RLS:** Si el usuario autenticado tiene rol `user`, las políticas RLS bloquean la mutación y se muestra un aviso explicativo. Solo el rol `admin` tiene permiso de escritura.
+   - Credenciales de prueba integradas:
+     - **Admin (CRUD completo):** `admin@test.com` / `123456`
+     - **Usuario (Solo lectura / RLS bloqueado):** `user@test.com` / `123456`
+
+2. 🖼️ **Nueva Página para Storage Bucket (`/storage`):**
+   - Página dedicada para consultar los objetos del bucket público `imagenes` en Supabase Storage.
+   - Presentación moderna en **Cards responsivas (`ion-card`)**, con visualización de la imagen, título, descripción, peso en KB, formato MIME, fecha y botones para copiar o abrir la URL pública.
+
+---
+
 ## 🎯 Alineación Curricular (Comunidad de Madrid)
 
 - **RA 1: Confecciona interfaces gráficas de usuario utilizando herramientas visuales y librerías de componentes.**

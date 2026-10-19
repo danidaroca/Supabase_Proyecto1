@@ -40,3 +40,15 @@ CREATE POLICY "Escritura solo para admins" ON public.clients
 FOR ALL TO authenticated
 USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'))
 WITH CHECK (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin'));
+
+-- 7. Configuración de Storage Bucket ('imagenes')
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES ('imagenes', 'imagenes', true, 5242880, '{image/png,image/jpeg,image/webp,image/svg+xml}')
+ON CONFLICT (id) DO UPDATE SET public = true;
+
+-- 8. Políticas RLS para Storage Bucket
+CREATE POLICY "Lectura publica imagenes" ON storage.objects
+FOR SELECT USING (bucket_id = 'imagenes');
+
+CREATE POLICY "Subida para autenticados imagenes" ON storage.objects
+FOR INSERT TO authenticated WITH CHECK (bucket_id = 'imagenes');

@@ -648,42 +648,48 @@
         </div>
       </div>
 
-      <!-- SECCIÓN 6: CAPTURAS DE EJECUCIÓN (MODO ADMIN VS MODO USUARIO) -->
+      <!-- SECCIÓN 6: CAPTURAS DE EJECUCIÓN (LOGIN CUD, RLS Y STORAGE BUCKET CARDS) -->
       <div class="section-title">
-        6. Evidencias Visuales de Ejecución: Modo Administrador vs Modo Usuario Estándar
-        <span class="tag">Simulación Responsive</span>
+        6. Evidencias Visuales de Ejecución: Login Requerido (RLS) y Storage Bucket Cards
+        <span class="tag">Nuevas Funcionalidades</span>
       </div>
 
       <div class="two-cols" style="margin-bottom: 4px;">
-        <!-- CAPTURA 2: MODO ADMIN -->
+        <!-- CAPTURA 2: LOGIN REQUERIDO PARA CUD & MODO ADMIN -->
         <div>
           <div style="font-size: 7.3pt; font-weight: 700; color: #1e3a8a; margin-bottom: 2px;">
-            Captura 2: Modo Administrador (Formulario CRUD Activo + Sliding Options)
+            Captura 2: Solicitud de Login al Insertar/Editar &amp; Modo Admin (CRUD)
           </div>
           <div class="mockup-container">
             <div class="mockup-header">
               <div class="mockup-dots"><span class="mockup-dot r"></span><span class="mockup-dot y"></span><span class="mockup-dot g"></span></div>
-              <div class="mockup-title">DAM CRM &bull; Modo Administrador</div>
+              <div class="mockup-title">DAM CRM &bull; Supabase Auth &amp; Formulario CRUD</div>
             </div>
             <div class="mockup-body">
               <div class="mock-toolbar">
-                <span>DAM CRM - Clientes</span>
+                <span>DAM CRM &bull; Clientes</span>
                 <span class="mock-badge">ROL: ADMIN (CRUD)</span>
               </div>
-              <div class="mock-segment">
-                <div class="mock-seg-btn active">&check; Administrador</div>
-                <div class="mock-seg-btn">Usuario Estándar</div>
+              <!-- Modal / Alerta de Login para CUD -->
+              <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:5px; padding:5px; margin-bottom:5px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <strong style="color:#1d4ed8; font-size:6.9pt;">&#128274; Login Solicitado al Insertar/Editar</strong>
+                  <span style="font-size:6pt; background:#dbeafe; color:#1e40af; padding:1px 4px; border-radius:3px;">Supabase Auth</span>
+                </div>
+                <div style="font-size:6.2pt; color:#334155; margin-top:2px;">
+                  Sesión activa: <code>admin@test.com</code> &bull; Permiso RLS: <code>role = 'admin'</code>
+                </div>
               </div>
-              <!-- Formulario Admin -->
+              <!-- Formulario Reactivo -->
               <div class="mock-card">
-                <div class="mock-card-title">&oplus; Nuevo Cliente</div>
+                <div class="mock-card-title">&oplus; Nuevo Cliente / Editar</div>
                 <div class="mock-input">Nombre: Laura Gómez Ruiz</div>
                 <div class="mock-input">Empresa: Acme Corporation</div>
                 <div class="mock-input">Email: laura.gomez@acme.com</div>
-                <div class="mock-btn">&check; Guardar Cliente</div>
+                <div class="mock-btn">&check; Guardar Cliente en Supabase</div>
               </div>
               <!-- Lista con item deslizante -->
-              <div style="font-size:6.8pt; font-weight:bold; margin:3px 0 2px 0;">Listado (Deslizable a la izquierda):</div>
+              <div style="font-size:6.8pt; font-weight:bold; margin:2px 0 2px 0;">Item Deslizante (CUD Autorizado):</div>
               <div class="mock-sliding-active">
                 <div class="mock-sliding-left">
                   <div class="mock-item-info">
@@ -696,68 +702,70 @@
                   <div class="mock-action-btn del">&#128465; Borrar</div>
                 </div>
               </div>
-              <div class="mock-item">
-                <div class="mock-item-info">
-                  <strong>Ana Belén Martínez</strong>
-                  <span>InnoData Global &bull; ana.martinez@innodata.org</span>
-                </div>
-              </div>
               <div class="mock-toast">
-                <span class="chk">&check;</span> Cliente insertado con éxito en PostgreSQL Supabase
+                <span class="chk">&check;</span> Operación CUD autorizada y guardada en PostgreSQL
               </div>
             </div>
           </div>
         </div>
 
-        <!-- CAPTURA 3: MODO USUARIO -->
+        <!-- CAPTURA 3: STORAGE BUCKET CARDS (/storage) -->
         <div>
-          <div style="font-size: 7.3pt; font-weight: 700; color: #92400e; margin-bottom: 2px;">
-            Captura 3: Modo Usuario Estándar (Restricción RBAC @if Activa)
+          <div style="font-size: 7.3pt; font-weight: 700; color: #065f46; margin-bottom: 2px;">
+            Captura 3: Nueva Página de Storage Bucket (Vista de Imágenes en Cards)
           </div>
           <div class="mockup-container">
-            <div class="mockup-header">
+            <div class="mockup-header" style="background:#064e3b;">
               <div class="mockup-dots"><span class="mockup-dot r"></span><span class="mockup-dot y"></span><span class="mockup-dot g"></span></div>
-              <div class="mockup-title">DAM CRM &bull; Modo Consulta Restringido</div>
+              <div class="mockup-title">Ruta: /storage &bull; Bucket: imagenes (Supabase)</div>
             </div>
-            <div class="mockup-body">
-              <div class="mock-toolbar" style="background:#475569;">
-                <span>DAM CRM - Clientes</span>
-                <span class="mock-badge usr">ROL: USUARIO (READ-ONLY)</span>
+            <div class="mockup-body" style="background:#f0fdf4;">
+              <div class="mock-toolbar" style="background:#059669;">
+                <span>Storage Bucket: imagenes</span>
+                <span class="mock-badge" style="background:#047857;">4 CARDS CARGADAS</span>
               </div>
-              <div class="mock-segment">
-                <div class="mock-seg-btn">Administrador</div>
-                <div class="mock-seg-btn active">&check; Usuario Estándar</div>
-              </div>
-              <!-- Aviso modo consulta -->
-              <div style="background:#fef3c7; border:1px solid #fde68a; border-radius:4px; padding:5px; margin-bottom:5px; color:#92400e;">
-                <strong style="display:block; font-size:7pt;">Modo Consulta (Restricción RBAC Activa)</strong>
-                <span style="font-size:6.3pt;">Formulario reactivo oculto por <code>@if (isAdmin() === 'admin')</code>. Sin permisos de modificación o borrado.</span>
-              </div>
-              <!-- Lista sin acciones deslizables -->
-              <div style="font-size:6.8pt; font-weight:bold; margin:3px 0 2px 0;">Listado de Clientes (Solo Lectura):</div>
-              <div class="mock-item">
-                <div class="mock-item-info">
-                  <strong>Laura Gómez Ruiz</strong>
-                  <span>Acme Corporation &bull; laura.gomez@acme.com</span>
+              <!-- Cards de Imágenes de Storage -->
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-bottom:4px;">
+                <div class="mock-card" style="margin:0; padding:4px;">
+                  <div style="height:32px; background:#0f172a; border-radius:3px; display:flex; align-items:center; justify-content:center; color:#38bdf8; font-size:12pt;">
+                    &#128202;
+                  </div>
+                  <strong style="display:block; font-size:6.4pt; margin-top:2px; color:#0f172a;">Métricas CRM</strong>
+                  <span style="font-size:5.6pt; color:#64748b;">crm-analytics-banner.svg</span>
+                  <div style="font-size:5.5pt; color:#059669; font-weight:bold; margin-top:1px;">4.15 KB &bull; image/svg+xml</div>
                 </div>
-                <span style="font-size:6pt; color:#94a3b8;">Lectura</span>
-              </div>
-              <div class="mock-item">
-                <div class="mock-item-info">
-                  <strong>Carlos Fernández</strong>
-                  <span>TecnoSoft SL &bull; carlos@tecnosoft.es</span>
+
+                <div class="mock-card" style="margin:0; padding:4px;">
+                  <div style="height:32px; background:#0f172a; border-radius:3px; display:flex; align-items:center; justify-content:center; color:#10b981; font-size:12pt;">
+                    &#128737;
+                  </div>
+                  <strong style="display:block; font-size:6.4pt; margin-top:2px; color:#0f172a;">Seguridad RLS</strong>
+                  <span style="font-size:5.6pt; color:#64748b;">supabase-rls-security.svg</span>
+                  <div style="font-size:5.5pt; color:#059669; font-weight:bold; margin-top:1px;">3.80 KB &bull; image/svg+xml</div>
                 </div>
-                <span style="font-size:6pt; color:#94a3b8;">Lectura</span>
-              </div>
-              <div class="mock-item">
-                <div class="mock-item-info">
-                  <strong>Ana Belén Martínez</strong>
-                  <span>InnoData Global &bull; ana.martinez@innodata.org</span>
+
+                <div class="mock-card" style="margin:0; padding:4px;">
+                  <div style="height:32px; background:#0f172a; border-radius:3px; display:flex; align-items:center; justify-content:center; color:#818cf8; font-size:12pt;">
+                    &#9881;
+                  </div>
+                  <strong style="display:block; font-size:6.4pt; margin-top:2px; color:#0f172a;">Ionic Componentes</strong>
+                  <span style="font-size:5.6pt; color:#64748b;">ionic-angular-components.svg</span>
+                  <div style="font-size:5.5pt; color:#059669; font-weight:bold; margin-top:1px;">5.00 KB &bull; image/svg+xml</div>
                 </div>
-                <span style="font-size:6pt; color:#94a3b8;">Lectura</span>
+
+                <div class="mock-card" style="margin:0; padding:4px;">
+                  <div style="height:32px; background:#0f172a; border-radius:3px; display:flex; align-items:center; justify-content:center; color:#f59e0b; font-size:12pt;">
+                    &#128100;
+                  </div>
+                  <strong style="display:block; font-size:6.4pt; margin-top:2px; color:#0f172a;">Directorio Clientes</strong>
+                  <span style="font-size:5.6pt; color:#64748b;">client-directory-card.svg</span>
+                  <div style="font-size:5.5pt; color:#059669; font-weight:bold; margin-top:1px;">3.33 KB &bull; image/svg+xml</div>
+                </div>
               </div>
-              <div style="text-align:center; font-size:6.2pt; color:#64748b; margin-top:14px; padding:4px; background:#f1f5f9; border-radius:3px;">
-                &#128274; Deslizamiento deshabilitado para usuarios no autorizados (CE 3.d)
+
+              <!-- Banner de aviso RLS al usuario -->
+              <div style="background:#fef3c7; border:1px solid #fde68a; border-radius:4px; padding:3px 5px; color:#92400e; font-size:6.1pt;">
+                <strong>Cuidado con RLS:</strong> Si inicias sesión con <code>user@test.com</code>, Supabase RLS bloquea CUD y mantiene acceso de solo lectura.
               </div>
             </div>
           </div>
